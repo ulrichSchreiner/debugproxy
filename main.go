@@ -7,6 +7,9 @@ import (
 	"log"
 	"net/http"
 	"net/http/httputil"
+	"strings"
+
+	"github.com/hokaccha/go-prettyjson"
 )
 
 func createHandler(rescode int) http.Handler {
@@ -14,6 +17,10 @@ func createHandler(rescode int) http.Handler {
 		rq, _ := httputil.DumpRequest(r, false)
 		fmt.Println(string(rq))
 		body, _ := ioutil.ReadAll(r.Body)
+		ct := r.Header.Get("Content-Type")
+		if strings.Contains(ct, "json") {
+			body, _ = prettyjson.Format(body)
+		}
 		fmt.Println(string(body))
 		w.WriteHeader(rescode)
 	})
