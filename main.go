@@ -35,5 +35,6 @@ func main() {
 
 	http.Handle("/", createHandler(*rsp))
 
+	log.Printf("start listening: %s", *address)
 	log.Fatal(http.ListenAndServe(*address, nil))
 }
