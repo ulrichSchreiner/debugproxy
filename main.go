@@ -14,14 +14,14 @@ import (
 
 func createHandler(rescode int) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
 		rq, _ := httputil.DumpRequest(r, false)
-		fmt.Println(string(rq))
 		body, _ := ioutil.ReadAll(r.Body)
 		ct := r.Header.Get("Content-Type")
 		if strings.Contains(ct, "json") {
 			body, _ = prettyjson.Format(body)
 		}
-		fmt.Println(string(body))
+		fmt.Printf("%s\n%s\n", string(rq), string(body))
 		w.WriteHeader(rescode)
 	})
 
