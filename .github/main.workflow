@@ -1,8 +1,8 @@
 workflow "Compile" {
   on = "push"
-  resolves = ["docker://docker.io/golang:1"]
+  resolves = ["compile sources"]
 }
 
-action "docker://golang:1" {
-  uses = "docker://golang:1"
+action "compile sources" {
+  uses = "docker://docker.io/golang:1"
 }
